@@ -10,6 +10,19 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+/build/
+/bin/
+/src/spv/
+/.cache/
+/src/x64/
+/src/.idea/
+/src/.vs/
+/src/rtrt/
+/src/assimp.dll
+*.user
+*.gfxr
+*.o
+*.ini
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
