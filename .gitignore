@@ -10,6 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+
 /build/
 /bin/
 /src/spv/
@@ -23,6 +24,7 @@ CMakeUserPresets.json
 *.gfxr
 *.o
 *.ini
+*.ppm
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

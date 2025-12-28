@@ -10,7 +10,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAK
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE "$<$<CONFIG:Debug>:_DEBUG>")
 
-set( CMAKE_CXX_STANDARD 17 )
+set( CMAKE_C_STANDARD 23 )
 target_compile_features( ${PROJECT_NAME} PUBLIC c_std_23 )
 
 set( CMAKE_C_FLAGS "-Wall -Werror -Wextra" )
@@ -23,4 +23,5 @@ add_custom_target(
     COMMAND ${PROJECT_NAME}
     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
     DEPENDS ${PROJECT_NAME}
+    USES_TERMINAL
 )
