@@ -23,7 +23,7 @@ int main(void)
             int ig = (int)( 255.999 * g );
             int ib = (int)( 255.999 * b );
 
-            fprintf( ppm, " %i %i %i\n", ir, ig, ib );
+            fprintf( ppm, "%i %i %i\n", ir, ig, ib );
         }
     }
     
