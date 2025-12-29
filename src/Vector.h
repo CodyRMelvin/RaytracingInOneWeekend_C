@@ -50,6 +50,18 @@ inline void Vec3_RefAdd( Vec3* vec1, Vec3 vec2 )
     vec1->z += vec2.z;
 }
 
+[[nodiscard]] inline Vec3 Vec3_Subtract( Vec3 vec1, Vec3 vec2 )
+{
+    return (Vec3){ .x = vec1.x - vec2.x, .y = vec1.y - vec2.y, .z = vec1.z - vec2.z };
+}
+
+inline void Vec3_RefSubtract( Vec3* vec1, Vec3 vec2 )
+{
+    vec1->x -= vec2.x;
+    vec1->y -= vec2.y;
+    vec1->z -= vec2.z;
+}
+
 [[nodiscard]] inline Vec3 Vec3_Multiply( Vec3 vec, double s )
 {
     return(Vec3){ .x = vec.x * s, .y = vec.y * s, .z = vec.z * s };
