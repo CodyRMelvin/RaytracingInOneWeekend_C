@@ -1,3 +1,5 @@
+#pragma once
+
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -41,7 +43,7 @@ inline void Vec3_InverseEquals(Vec3* vec)
     return (Vec3){ .x = vec1.x + vec2.x, .y = vec1.y + vec2.y, .z = vec1.z + vec2.z };
 }
 
-inline void Vec3_AddEquals( Vec3* vec1, Vec3 vec2 )
+inline void Vec3_RefAdd( Vec3* vec1, Vec3 vec2 )
 {
     vec1->x += vec2.x;
     vec1->y += vec2.y;
@@ -53,7 +55,7 @@ inline void Vec3_AddEquals( Vec3* vec1, Vec3 vec2 )
     return(Vec3){ .x = vec.x * s, .y = vec.y * s, .z = vec.z * s };
 }
 
-inline void Vec3_MultiplyEquals( Vec3* vec, double s )
+inline void Vec3_RefMultiply( Vec3* vec, double s )
 {
     vec->x *= s;
     vec->y *= s;
@@ -65,7 +67,7 @@ inline void Vec3_MultiplyEquals( Vec3* vec, double s )
     return (Vec3){ .x = vec.x / s, .y = vec.y / s, .z = vec.z / s };
 }
 
-inline void Vec3_DivideEquals( Vec3* vec, double s )
+inline void Vec3_RefDivide( Vec3* vec, double s )
 {
     vec->x /= s;
     vec->y /= s;
@@ -89,7 +91,7 @@ inline void Vec3_DivideEquals( Vec3* vec, double s )
 
 inline void Vec3_Normalize(Vec3* vec)
 {
-    Vec3_DivideEquals( vec, Vec3_Length(*vec) );
+    Vec3_RefDivide( vec, Vec3_Length(*vec) );
 }
 
 [[nodiscard]] inline double Vec3_Dot( Vec3 vec1, Vec3 vec2 )

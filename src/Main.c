@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#include "Vector.h"
+#include "Color.h"
+
 int main(void)
 {
     FILE* ppm = fopen( "image.ppm", "rw+" );
@@ -15,17 +18,19 @@ int main(void)
 
         for ( int i = 0; i < imageWidth; ++i )
         {
-            double r = (double)i / ( imageWidth - 1 );
-            double g = (double)j / ( imageHeight - 1 );
-            double b = 0.0;
+            Vec3 color = (Vec3) 
+            {
+                .r = (double)i / ( imageWidth - 1 ),
+                .g = (double)j / ( imageHeight - 1 ),
+                .b = 0.0
+            };
 
-            int ir = (int)( 255.999 * r );
-            int ig = (int)( 255.999 * g );
-            int ib = (int)( 255.999 * b );
-
-            fprintf( ppm, "%i %i %i\n", ir, ig, ib );
+            WriteColor( ppm, color );
         }
     }
+
+    printf("\rDone!");
+    fflush(stdout);
     
     fclose(ppm);
     return 0;
