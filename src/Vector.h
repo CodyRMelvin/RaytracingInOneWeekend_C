@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -38,80 +41,79 @@ inline void Vec3_InverseEquals(Vec3* vec)
     vec->z = 1.0 / vec->z;
 }
 
-[[nodiscard]] inline Vec3 Vec3_Add( Vec3 vec1, Vec3 vec2 )
+[[nodiscard]] extern inline Vec3 Vec3_Add( Vec3 vec1, Vec3 vec2 )
 {
     return (Vec3){ .x = vec1.x + vec2.x, .y = vec1.y + vec2.y, .z = vec1.z + vec2.z };
 }
 
-inline void Vec3_RefAdd( Vec3* vec1, Vec3 vec2 )
+extern inline void Vec3_RefAdd( Vec3* vec1, Vec3 vec2 )
 {
     vec1->x += vec2.x;
     vec1->y += vec2.y;
     vec1->z += vec2.z;
 }
 
-[[nodiscard]] inline Vec3 Vec3_Subtract( Vec3 vec1, Vec3 vec2 )
+[[nodiscard]] extern inline Vec3 Vec3_Subtract( Vec3 vec1, Vec3 vec2 )
 {
     return (Vec3){ .x = vec1.x - vec2.x, .y = vec1.y - vec2.y, .z = vec1.z - vec2.z };
 }
 
-inline void Vec3_RefSubtract( Vec3* vec1, Vec3 vec2 )
+extern inline void Vec3_RefSubtract( Vec3* vec1, Vec3 vec2 )
 {
     vec1->x -= vec2.x;
     vec1->y -= vec2.y;
     vec1->z -= vec2.z;
 }
 
-[[nodiscard]] inline Vec3 Vec3_Multiply( Vec3 vec, double s )
+[[nodiscard]] extern inline Vec3 Vec3_Multiply( Vec3 vec, double s )
 {
     return(Vec3){ .x = vec.x * s, .y = vec.y * s, .z = vec.z * s };
 }
 
-inline void Vec3_RefMultiply( Vec3* vec, double s )
+extern inline void Vec3_RefMultiply( Vec3* vec, double s )
 {
     vec->x *= s;
     vec->y *= s;
     vec->z *= s;
 }
 
-[[nodiscard]] inline Vec3 Vec3_Divide( Vec3 vec, double s )
+[[nodiscard]] extern inline Vec3 Vec3_Divide( Vec3 vec, double s )
 {
     return (Vec3){ .x = vec.x / s, .y = vec.y / s, .z = vec.z / s };
 }
 
-inline void Vec3_RefDivide( Vec3* vec, double s )
+extern inline void Vec3_RefDivide( Vec3* vec, double s )
 {
     vec->x /= s;
     vec->y /= s;
     vec->z /= s;
 }
 
-[[nodiscard]] inline double Vec3_LengthSquared(Vec3 vec)
+[[nodiscard]] extern inline double Vec3_LengthSquared(Vec3 vec)
 {
     return vec.x * vec.x + vec.y * vec.y + vec.z + vec.z;
 }
 
-[[nodiscard]] inline double Vec3_Length(Vec3 vec)
-{
+[[nodiscard]] extern inline double Vec3_Length(Vec3 vec) {
     return sqrt( Vec3_LengthSquared(vec) );
 }
 
-[[nodiscard]] inline Vec3 Vec3_UnitVector(Vec3 vec)
+[[nodiscard]] extern inline Vec3 Vec3_UnitVector(Vec3 vec)
 {
     return Vec3_Divide( vec, Vec3_Length(vec) );
 }
 
-inline void Vec3_Normalize(Vec3* vec)
+extern inline void Vec3_Normalize(Vec3* vec)
 {
     Vec3_RefDivide( vec, Vec3_Length(*vec) );
 }
 
-[[nodiscard]] inline double Vec3_Dot( Vec3 vec1, Vec3 vec2 )
+[[nodiscard]] extern inline double Vec3_Dot( Vec3 vec1, Vec3 vec2 )
 {
     return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
 }
 
-[[nodiscard]] inline Vec3 Vec3_Cross( Vec3 vec1, Vec3 vec2 )
+[[nodiscard]] extern inline Vec3 Vec3_Cross( Vec3 vec1, Vec3 vec2 )
 {
     return (Vec3)
     {
@@ -127,3 +129,5 @@ void Vec3_ToString( Vec3 vec, unsigned int length, char string[length] )
 
     sprintf( string, "%#.9g %#.9g %#.9g\n", vec.x, vec.y, vec.z );
 }
+
+#endif

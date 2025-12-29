@@ -14,5 +14,5 @@ else
     exit 0
 fi
 
-cmake --build $BUILD --config $CONFIGURATION
+cmake --build $BUILD --config $CONFIGURATION -v
 

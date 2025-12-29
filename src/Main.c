@@ -4,16 +4,35 @@
 #include "Color.h"
 #include "Ray.h"
 
-inline Vec3 Ray_Color(Ray r)
+extern inline bool HitSphere( Vec3 center, double radius, Ray r )
 {
+    Vec3 OC = Vec3_Subtract( center, r.origin );
+    double a = Vec3_Dot( r.dir, r.dir );
+    double b = -2.0 * Vec3_Dot( r.dir, OC );
+    double c = Vec3_Dot( OC, OC ) - radius * radius;
+    
+    return ( b * b - 4 * a * c ) >= 0;
+}
+
+extern inline Vec3 Ray_Color(Ray r)
+{
+    // if ( HitSphere( (Vec3){ .x = 0, .y = 0, .z = -1 }, 0.5, r ) )
+        // return (Vec3){ .x = 1, .y = 0, .z = 0 };
+
     Vec3 unitDirection = Vec3_UnitVector( r.dir );
-    double a = .5 * unitDirection.y + 1.0;
-    return Vec3_Add( Vec3_Multiply( (Vec3){ 0, 0, 0 }, 1.0 - a ), Vec3_Multiply( (Vec3){ .5, .7, 1.0 }, a ) );
+    double a = .5 * ( unitDirection.y + 1.0 );
+    return Vec3_Add
+    ( 
+        Vec3_Multiply( (Vec3){ .x = 1, .y = 1, .z = 1 }, 1.0 - a ), 
+        Vec3_Multiply( (Vec3){ .x = .5, .y = .7, .z = 1.0 }, a ) 
+    );
 }
 
 int main(void)
 {
-    FILE* ppm = fopen( "image.ppm", "rw+" );
+    FILE* ppm = fopen( "image.ppm", "w" );
+    if (!ppm)
+        assert( false && "File failed to open");
     
     //Image details
     double aspect = 16.0 / 9.0;
@@ -26,21 +45,19 @@ int main(void)
     //Camera details
     double focalLength = 1.0;
     double viewHeight = 2.0;
-    double viewWidth = viewHeight * (double)imageWidth / (double)imageHeight;
-    Vec3 camCenter = (Vec3){ 0, 0, 0 };
+    double viewWidth = viewHeight * ( (double)imageWidth / (double)imageHeight );
+    Vec3 camCenter = (Vec3){ .x = 0, .y = 0, .z = 0 };
 
-    Vec3 viewU = (Vec3){ viewWidth, 0, 0 };
-    Vec3 viewV = (Vec3){ 0, -viewHeight, 0 };
+    Vec3 viewU = (Vec3){ .x = viewWidth, .y = 0, .z = 0 };
+    Vec3 viewV = (Vec3){ .x = 0, .y = -viewHeight, .z = 0 };
 
     Vec3 deltaU = Vec3_Divide( viewU, imageWidth );
     Vec3 deltaV = Vec3_Divide( viewV, imageHeight );
 
-    Vec3 viewUpperLeft = Vec3_Subtract( camCenter, 
-                         Vec3_Subtract( (Vec3){ 0, 0, focalLength }, 
-                         Vec3_Subtract( 
-                         Vec3_Multiply( deltaU, 0.5 ), 
-                         Vec3_Multiply( deltaV, 0.5 ) 
-                         ) ) );
+    Vec3 viewUpperLeft = camCenter;
+    Vec3_RefSubtract( &viewUpperLeft, (Vec3){ .x = 0, .y = 0, .z = focalLength } );
+    Vec3_RefSubtract( &viewUpperLeft, Vec3_Multiply( viewU, 0.5 ) );
+    Vec3_RefSubtract( &viewUpperLeft, Vec3_Multiply( viewV, 0.5 ) );
     Vec3 pixel00 = Vec3_Add( viewUpperLeft, Vec3_Multiply( Vec3_Add( deltaU, deltaV ), 0.5 ) );
 
     fprintf( ppm, "P3\n%i %i\n255\n", imageWidth, imageHeight );
@@ -53,7 +70,7 @@ int main(void)
         for ( int i = 0; i < imageWidth; ++i )
         {
             Vec3 pixelCenter = Vec3_Add( pixel00, Vec3_Add( Vec3_Multiply( deltaU, (double)i ), Vec3_Multiply( deltaV, (double)j ) ) );
-            Ray r = (Ray){ .origin = camCenter, .dir = Vec3_Subtract( camCenter, pixelCenter ) };
+            Ray r = (Ray){ .origin = camCenter, .dir = Vec3_Subtract( pixelCenter, camCenter ) };
 
             Vec3 color =  Ray_Color(r);
             WriteColor( ppm, color );
