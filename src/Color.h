@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Vector.h"
 
 void WriteColor( FILE* file, const Vec3 color )
