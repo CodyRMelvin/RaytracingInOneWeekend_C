@@ -9,5 +9,4 @@ void WriteColor( [[maybe_unused]] FILE* file, const Vec3 color )
     int bByte = (int)( 255.999 * color.b );
 
     fprintf( file, "%i %i %i\n", rByte, gByte, bByte );
-    // printf( "%i %i %i\n", rByte, gByte, bByte );
 }

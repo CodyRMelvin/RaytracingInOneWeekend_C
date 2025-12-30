@@ -1,21 +1,17 @@
-#include <stdio.h>
-
-#include "Vector.h"
-#include "Color.h"
-#include "Ray.h"
+#include "Common.h"
 
 extern inline double HitSphere( Vec3 center, double radius, Ray r )
 {
     Vec3 OC = Vec3_Subtract( center, r.origin );
-    double a = Vec3_Dot( r.dir, r.dir );
-    double b = -2.0 * Vec3_Dot( r.dir, OC );
-    double c = Vec3_Dot( OC, OC ) - radius * radius;
-    double discriminant = b * b - 4 * a * c;
+    double a = Vec3_LengthSquared(r.dir);
+    double h = Vec3_Dot( r.dir, OC );
+    double c = Vec3_LengthSquared(OC) - radius * radius;
+    double discriminant = h * h - a * c;
 
     if ( discriminant < 0 )
         return -1.0;
     else
-        return ( -b - sqrt(discriminant) ) / ( 2.0 * a );
+        return ( h - sqrt(discriminant) ) / a;
     
 }
 

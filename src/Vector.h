@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef VECTOR_H
-#define VECTOR_H
-
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -130,4 +127,3 @@ void Vec3_ToString( Vec3 vec, unsigned int length, char string[length] )
     sprintf( string, "%#.9g %#.9g %#.9g\n", vec.x, vec.y, vec.z );
 }
 
-#endif
