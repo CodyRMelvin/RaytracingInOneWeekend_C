@@ -91,7 +91,7 @@ extern inline void Vec3_RefDivide( Vec3* vec, double s )
 
 [[nodiscard]] extern inline double Vec3_LengthSquared(Vec3 vec)
 {
-    return vec.x * vec.x + vec.y * vec.y + vec.z + vec.z;
+    return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 }
 
 [[nodiscard]] extern inline double Vec3_Length(Vec3 vec) {

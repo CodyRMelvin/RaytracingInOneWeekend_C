@@ -16,8 +16,8 @@ extern inline bool HitSphere( Vec3 center, double radius, Ray r )
 
 extern inline Vec3 Ray_Color(Ray r)
 {
-    // if ( HitSphere( (Vec3){ .x = 0, .y = 0, .z = -1 }, 0.5, r ) )
-        // return (Vec3){ .x = 1, .y = 0, .z = 0 };
+    if ( HitSphere( (Vec3){ .x = 0, .y = 0, .z = -1 }, 0.5, r ) )
+        return (Vec3){ .x = 1, .y = 0, .z = 0 };
 
     Vec3 unitDirection = Vec3_UnitVector( r.dir );
     double a = .5 * ( unitDirection.y + 1.0 );
@@ -32,7 +32,7 @@ int main(void)
 {
     FILE* ppm = fopen( "image.ppm", "w" );
     if (!ppm)
-        assert( false && "File failed to open");
+        assert( false && "File failed to open" );
     
     //Image details
     double aspect = 16.0 / 9.0;
