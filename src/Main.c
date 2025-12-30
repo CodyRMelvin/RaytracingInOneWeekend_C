@@ -4,20 +4,29 @@
 #include "Color.h"
 #include "Ray.h"
 
-extern inline bool HitSphere( Vec3 center, double radius, Ray r )
+extern inline double HitSphere( Vec3 center, double radius, Ray r )
 {
     Vec3 OC = Vec3_Subtract( center, r.origin );
     double a = Vec3_Dot( r.dir, r.dir );
     double b = -2.0 * Vec3_Dot( r.dir, OC );
     double c = Vec3_Dot( OC, OC ) - radius * radius;
+    double discriminant = b * b - 4 * a * c;
+
+    if ( discriminant < 0 )
+        return -1.0;
+    else
+        return ( -b - sqrt(discriminant) ) / ( 2.0 * a );
     
-    return ( b * b - 4 * a * c ) >= 0;
 }
 
 extern inline Vec3 Ray_Color(Ray r)
 {
-    if ( HitSphere( (Vec3){ .x = 0, .y = 0, .z = -1 }, 0.5, r ) )
-        return (Vec3){ .x = 1, .y = 0, .z = 0 };
+    double t = HitSphere( (Vec3){ .x = 0, .y = 0, .z = -1 }, 0.5, r );
+    if ( t > 0 )
+    {
+        Vec3 N = Vec3_UnitVector( Vec3_Subtract( Ray_At( r, t ), (Vec3){ .x = 0, .y = 0, .z = -1 } ) );
+        return Vec3_Multiply( Vec3_Add( N, (Vec3){ .x = 1, .y = 1, .z = 1 } ), .5 );
+    }
 
     Vec3 unitDirection = Vec3_UnitVector( r.dir );
     double a = .5 * ( unitDirection.y + 1.0 );
